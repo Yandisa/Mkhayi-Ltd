@@ -1,0 +1,666 @@
+{% load static core_extras %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ site.meta_description }}">
+  <meta name="keywords" content="{{ site.meta_keywords }}">
+  <title>{{ site.company_name }} — Security Services, CCTV & Fibre Installation</title>
+  {% if site.favicon %}<link rel="icon" href="{{ site.favicon.url }}">{% endif %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body>
+
+
+{% if messages %}
+<div class="toast-stack">
+  {% for msg in messages %}
+  <div class="toast {{ msg.tags }}">
+    {% if msg.tags == 'success' %}
+    <svg viewBox="0 0 24 24" style="width:18px;height:18px;flex-shrink:0;stroke:#22C55E;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><polyline points="20 6 9 17 4 12"/></svg>
+    {% else %}
+    <svg viewBox="0 0 24 24" style="width:18px;height:18px;flex-shrink:0;stroke:#EF4444;fill:none;stroke-width:2;stroke-linecap:round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    {% endif %}
+    {{ msg }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<nav class="navbar hero-dark" role="navigation" aria-label="Main navigation">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">
+        {% if site.logo %}
+          <img src="{{ site.logo.url }}" alt="{{ site.company_name }}">
+        {% else %}
+          {{ site.company_name|truncatechars:10 }}<span>.</span>
+        {% endif %}
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#why">Why Us</a></li>
+        {% if gallery %}<li><a href="#gallery">Gallery</a></li>{% endif %}
+        {% if team %}<li><a href="#team">Team</a></li>{% endif %}
+        {% if testimonials %}<li><a href="#testimonials">Clients</a></li>{% endif %}
+        <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+      </ul>
+
+      <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<section id="home" class="hero">
+  <div class="hero-bg">
+    {% if site.hero_image %}
+    <div class="hero-bg-img" style="background-image:url('{{ site.hero_image.url }}');"></div>
+    <div class="hero-overlay" style="opacity:{{ site.hero_image_overlay }};"></div>
+    {% endif %}
+  </div>
+  <div class="hero-pattern"></div>
+
+  <div class="container hero-content">
+    {# Left: text #}
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Licensed Security Provider &mdash; South Africa
+      </div>
+      <h1>
+        {{ site.hero_heading|linebreaksbr }}
+      </h1>
+      <p class="hero-sub">{{ site.hero_subheading }}</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-white">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.92 10.19a19.79 19.79 0 01-3.07-8.67A2 2 0 012.81 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l.91-.91a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.27v1.65z"/></svg>
+          {{ site.hero_cta_label }}
+        </a>
+        <a href="#services" class="btn btn-outline-white">
+          {{ site.hero_cta_secondary }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-accent-pill">
+        <span class="pill-dot"></span>
+        <p>24/7 Active Protection</p>
+      </div>
+      <div class="hero-img-frame">
+        {% if site.hero_image %}
+          <img src="{{ site.hero_image.url }}" alt="{{ site.company_name }} security services" loading="eager">
+        {% else %}
+          <div class="hero-img-fallback">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <p>Upload a hero image in Site Settings</p>
+          </div>
+        {% endif %}
+      </div>
+      <div class="hero-stats-card">
+        <div class="hero-stat">
+          <span class="hero-stat-num" data-count="{{ site.about_clients }}" data-suffix="+">0+</span>
+          <span class="hero-stat-lbl">Clients</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num" data-count="{{ site.about_years }}" data-suffix="yrs">0</span>
+          <span class="hero-stat-lbl">Experience</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num" data-count="{{ site.about_projects }}" data-suffix="+">0</span>
+          <span class="hero-stat-lbl">Installs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+    <div class="scroll-mouse"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<div class="ticker-bar" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Security Services<span class="ticker-dot"></span></span>
+    <span class="ticker-item">CCTV Supply &amp; Installation<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Fibre Installation<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Access Control<span class="ticker-dot"></span></span>
+    <span class="ticker-item">24/7 Monitoring<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Armed Response<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Residential Security<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Commercial Security<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Security Services<span class="ticker-dot"></span></span>
+    <span class="ticker-item">CCTV Supply &amp; Installation<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Fibre Installation<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Access Control<span class="ticker-dot"></span></span>
+    <span class="ticker-item">24/7 Monitoring<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Armed Response<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Residential Security<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Commercial Security<span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<section id="about" class="about">
+  <div class="container">
+    <div class="about-grid">
+      {# Image column #}
+      <div class="about-img-wrap reveal">
+        <div class="about-img-main">
+          {% if site.about_image %}
+            <img src="{{ site.about_image.url }}" alt="{{ site.about_image_caption }}" loading="lazy">
+          {% else %}
+            <div class="about-img-fallback">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>
+            </div>
+          {% endif %}
+        </div>
+        {% if site.about_image_caption %}
+        <div class="about-caption">{{ site.about_image_caption }}</div>
+        {% endif %}
+      </div>
+
+      <div>
+        <div class="eyebrow reveal">Who We Are</div>
+        <h2 class="section-title reveal reveal-delay-1">{{ site.about_heading }}</h2>
+        <p class="section-lead reveal reveal-delay-2">{{ site.about_body }}</p>
+
+        <div class="about-highlights reveal reveal-delay-3">
+          <div class="hl-row">
+            <div class="hl-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <p>PSIRA-registered security personnel, thoroughly vetted and trained</p>
+          </div>
+          <div class="hl-row">
+            <div class="hl-icon">
+              <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
+            <p>HD CCTV systems supplied and installed for homes and businesses</p>
+          </div>
+          <div class="hl-row">
+            <div class="hl-icon">
+              <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
+            </div>
+            <p>High-speed fibre connectivity — full installation from survey to activation</p>
+          </div>
+        </div>
+
+        <div class="about-stats-row reveal reveal-delay-4">
+          <div class="about-stat">
+            <span class="about-stat-num" data-count="{{ site.about_years }}" data-suffix="+">{{ site.about_years }}+</span>
+            <span class="about-stat-lbl">Years Active</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-num" data-count="{{ site.about_clients }}" data-suffix="+">{{ site.about_clients }}+</span>
+            <span class="about-stat-lbl">Happy Clients</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-num" data-count="{{ site.about_projects }}" data-suffix="+">{{ site.about_projects }}+</span>
+            <span class="about-stat-lbl">Installations</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="services">
+  <div class="container">
+    <div class="services-header">
+      <div class="eyebrow reveal">{{ site.services_heading }}</div>
+      <h2 class="section-title reveal reveal-delay-1">Our Services</h2>
+      {% if site.services_subheading %}
+      <p class="section-lead reveal reveal-delay-2">{{ site.services_subheading }}</p>
+      {% endif %}
+    </div>
+
+    <div class="services-grid">
+      {% for svc in services %}
+      <div class="service-card reveal reveal-delay-{{ forloop.counter }}">
+        <div class="service-img">
+          {% if svc.image %}
+            <img src="{{ svc.image.url }}" alt="{{ svc.title }}" loading="lazy">
+          {% else %}
+            <div class="service-img-fallback">
+              {# Icon SVG by type #}
+              {% if svc.icon == 'shield' %}<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              {% elif svc.icon == 'camera' %}<svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              {% elif svc.icon == 'wifi' %}<svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
+              {% elif svc.icon == 'lock' %}<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              {% elif svc.icon == 'eye' %}<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              {% elif svc.icon == 'wrench' %}<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+              {% else %}<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              {% endif %}
+            </div>
+          {% endif %}
+          {% if svc.highlight %}
+          <div class="service-highlight">{{ svc.highlight }}</div>
+          {% endif %}
+        </div>
+        <div class="service-body">
+          <div class="service-icon-row">
+            <div class="service-icon-box">
+              {% if svc.icon == 'shield' %}<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              {% elif svc.icon == 'camera' %}<svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              {% elif svc.icon == 'wifi' %}<svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
+              {% elif svc.icon == 'lock' %}<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              {% elif svc.icon == 'eye' %}<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              {% elif svc.icon == 'wrench' %}<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+              {% else %}<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              {% endif %}
+            </div>
+            <div class="service-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+          <h3>{{ svc.title }}</h3>
+          <p>{{ svc.description }}</p>
+        </div>
+      </div>
+      {% empty %}
+      <div class="service-card reveal">
+        <div class="service-img"><div class="service-img-fallback"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="service-highlight">PSIRA Registered</div></div>
+        <div class="service-body">
+          <div class="service-icon-row"><div class="service-icon-box"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div></div>
+          <h3>Security Services</h3>
+          <p>Professional manned guarding for residential estates, commercial properties, and events. All guards are PSIRA-registered and rigorously screened.</p>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-img"><div class="service-img-fallback"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div class="service-highlight">HD Systems</div></div>
+        <div class="service-body">
+          <div class="service-icon-row"><div class="service-icon-box"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><div class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div></div>
+          <h3>CCTV Supply & Installation</h3>
+          <p>We supply and install high-definition CCTV camera systems for homes and businesses. Remote viewing, night vision, and full site coverage included.</p>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-img"><div class="service-img-fallback"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg></div>
+        <div class="service-highlight">Fast Speeds</div></div>
+        <div class="service-body">
+          <div class="service-icon-row"><div class="service-icon-box"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg></div><div class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div></div>
+          <h3>Fibre Installation</h3>
+          <p>End-to-end fibre optic installation for homes and commercial premises. We handle the full process — from site survey and cabling to activation and testing.</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="why" class="why">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-text">
+        <div class="eyebrow reveal">Why Choose Us</div>
+        <h2 class="section-title reveal reveal-delay-1">{{ site.why_heading }}</h2>
+        <p class="section-lead reveal reveal-delay-2">{{ site.why_body }}</p>
+
+        <div class="why-points">
+          {% for point in why_points %}
+          <div class="why-point reveal reveal-delay-{{ forloop.counter }}">
+            <div class="why-point-icon">
+              {% if point.icon == 'shield' %}<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              {% elif point.icon == 'star' %}<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              {% elif point.icon == 'clock' %}<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              {% elif point.icon == 'award' %}<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+              {% elif point.icon == 'users' %}<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+              {% elif point.icon == 'zap' %}<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              {% else %}<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              {% endif %}
+            </div>
+            <div>
+              <h4>{{ point.heading }}</h4>
+              <p>{{ point.body }}</p>
+            </div>
+          </div>
+          {% empty %}
+          <div class="why-point reveal">
+            <div class="why-point-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+            <div><h4>PSIRA Registered & Compliant</h4><p>Fully licenced and compliant with all South African security regulations.</p></div>
+          </div>
+          <div class="why-point reveal reveal-delay-1">
+            <div class="why-point-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+            <div><h4>Fast Response & Deployment</h4><p>Rapid on-site response and quick installation turnaround — because security cannot wait.</p></div>
+          </div>
+          <div class="why-point reveal reveal-delay-2">
+            <div class="why-point-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+            <div><h4>Transparent Pricing — No Surprises</h4><p>Clear, upfront quotes with no hidden fees. Monthly subscriptions from just R150.</p></div>
+          </div>
+          <div class="why-point reveal reveal-delay-3">
+            <div class="why-point-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><h4>24/7 Support & Monitoring</h4><p>Round-the-clock support, monitoring, and emergency call-outs to keep you protected.</p></div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="why-img-wrap reveal reveal-delay-2">
+        <div class="why-img-frame">
+          {% if site.why_image %}
+            <img src="{{ site.why_image.url }}" alt="Mkhayi Ltd. operations" loading="lazy">
+          {% else %}
+            <div class="why-img-fallback">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+          {% endif %}
+        </div>
+        <div class="why-badge-card">
+          <div class="why-badge-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="why-badge-text">
+            <strong>Trusted by {{ site.about_clients }}+ clients</strong>
+            <span>across South Africa</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if gallery %}
+<section id="gallery" class="gallery">
+  <div class="container">
+    <div class="gallery-header">
+      <div class="eyebrow reveal">Our Work</div>
+      <h2 class="section-title reveal reveal-delay-1">In the Field</h2>
+    </div>
+    <div class="gallery-grid">
+      {% for img in gallery %}
+      <div class="g-item reveal">
+        <img src="{{ img.image.url }}" alt="{{ img.caption|default:'Mkhayi Ltd. work' }}" loading="lazy">
+        {% if img.caption %}
+        <div class="g-item-overlay"><span>{{ img.caption }}</span></div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if team %}
+<section id="team" class="team">
+  <div class="container">
+    <div class="team-header">
+      <div class="eyebrow reveal">The People Behind It</div>
+      <h2 class="section-title reveal reveal-delay-1">Meet Our Team</h2>
+      <p class="section-lead reveal reveal-delay-2">Experienced professionals dedicated to keeping your home and business secure, connected, and monitored around the clock.</p>
+    </div>
+    <div class="team-grid">
+      {% for member in team %}
+      <div class="team-card reveal reveal-delay-{{ forloop.counter }}">
+        <div class="team-photo">
+          {% if member.photo %}
+            <img src="{{ member.photo.url }}" alt="{{ member.name }}" loading="lazy">
+          {% else %}
+            <div class="team-photo-fallback">
+              <span>{{ member.name|first|upper }}</span>
+            </div>
+          {% endif %}
+        </div>
+        <div class="team-info">
+          <h3>{{ member.name }}</h3>
+          <span class="team-role">{{ member.role }}</span>
+          {% if member.bio %}
+          <p class="team-bio">{{ member.bio }}</p>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if testimonials %}
+<section id="testimonials" class="testimonials">
+  <div class="container">
+    <div class="testimonials-header">
+      <div>
+        <div class="eyebrow">Client Feedback</div>
+        <h2 class="section-title">What Our Clients Say</h2>
+      </div>
+    </div>
+    <div class="testimonials-grid">
+      {% for t in testimonials %}
+      <div class="tcard reveal reveal-delay-{{ forloop.counter }}">
+        <div class="tcard-stars">
+          {% for i in "12345"|make_list %}
+          <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" {% if forloop.counter > t.rating %}style="fill:#374151"{% endif %}/></svg>
+          {% endfor %}
+        </div>
+        <p class="tcard-quote">&ldquo;{{ t.quote }}&rdquo;</p>
+        <div class="tcard-author">
+          <div class="tcard-avatar">
+            {% if t.photo %}
+              <img src="{{ t.photo.url }}" alt="{{ t.client_name }}">
+            {% else %}
+              {{ t.client_name|first|upper }}
+            {% endif %}
+          </div>
+          <div>
+            <span class="tcard-name">{{ t.client_name }}</span>
+            <span class="tcard-meta">{{ t.company }}{% if t.company and t.location %} &mdash; {% endif %}{{ t.location }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="contact-grid">
+      {# Left #}
+      <div>
+        <div class="eyebrow reveal">Get in Touch</div>
+        <h2 class="section-title reveal reveal-delay-1">{{ site.contact_heading }}</h2>
+        {% if site.contact_subheading %}
+        <p class="section-lead reveal reveal-delay-2">{{ site.contact_subheading }}</p>
+        {% endif %}
+
+        <div class="contact-info reveal reveal-delay-3">
+          <div class="cinfo-row">
+            <div class="cinfo-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.92 10.19a19.79 19.79 0 01-3.07-8.67A2 2 0 012.81 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l.91-.91a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.27v1.65z"/></svg></div>
+            <div>
+              <span class="cinfo-label">Phone</span>
+              <a href="tel:{{ site.phone }}" class="cinfo-value">{{ site.phone }}</a>
+            </div>
+          </div>
+          <div class="cinfo-row">
+            <div class="cinfo-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div>
+              <span class="cinfo-label">Email</span>
+              <a href="mailto:{{ site.email }}" class="cinfo-value">{{ site.email }}</a>
+            </div>
+          </div>
+          <div class="cinfo-row">
+            <div class="cinfo-icon" style="background:#25D366;"><svg viewBox="0 0 24 24" fill="white" stroke="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.989.578 3.842 1.574 5.4L2 22l4.734-1.542A9.978 9.978 0 0012 22c5.523 0 10-4.477 10-10S17.522 2 11.999 2z"/></svg></div>
+            <div>
+              <span class="cinfo-label">WhatsApp</span>
+              <a href="https://wa.me/{{ site.whatsapp_number }}" target="_blank" rel="noopener" class="cinfo-value">Chat with us</a>
+            </div>
+          </div>
+          {% if site.address %}
+          <div class="cinfo-row">
+            <div class="cinfo-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div>
+              <span class="cinfo-label">Location</span>
+              <span class="cinfo-value">{{ site.address }}</span>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+        {% if site.contact_image %}
+        <div class="contact-img-frame reveal reveal-delay-4">
+          <img src="{{ site.contact_image.url }}" alt="Mkhayi Ltd." loading="lazy">
+        </div>
+        {% endif %}
+      </div>
+
+      {# Form #}
+      <div class="reveal reveal-delay-2">
+        <div class="contact-form-card">
+          <h3 class="form-title">Send Us a Message</h3>
+          <p class="form-sub">We reply within one business day.</p>
+          <form method="post" action="#contact" novalidate>
+            {% csrf_token %}
+            <div class="form-row">
+              <div class="form-group">
+                <label for="id_name">Full Name <span style="color:#EF4444">*</span></label>
+                <input type="text" id="id_name" name="name" placeholder="Your full name" required>
+              </div>
+              <div class="form-group">
+                <label for="id_email">Email Address <span style="color:#EF4444">*</span></label>
+                <input type="email" id="id_email" name="email" placeholder="you@example.com" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="id_phone">Phone Number</label>
+                <input type="tel" id="id_phone" name="phone" placeholder="+27 XX XXX XXXX">
+              </div>
+              <div class="form-group">
+                <label for="id_service">Service of Interest</label>
+                <select id="id_service" name="service">
+                  <option value="">Select a service…</option>
+                  {% for svc in services %}
+                  <option value="{{ svc.title }}">{{ svc.title }}</option>
+                  {% empty %}
+                  <option value="Security Services">Security Services</option>
+                  <option value="CCTV Installation">CCTV Supply &amp; Installation</option>
+                  <option value="Fibre Installation">Fibre Installation</option>
+                  <option value="Access Control">Access Control</option>
+                  <option value="General Enquiry">General Enquiry</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="id_message">Message <span style="color:#EF4444">*</span></label>
+              <textarea id="id_message" name="message" placeholder="Tell us about your requirements…" required></textarea>
+            </div>
+            <button type="submit" class="btn-submit-full">
+              Send Message
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          {% if site.logo %}
+            <img src="{{ site.logo.url }}" alt="{{ site.company_name }}">
+          {% else %}
+            {{ site.company_name }}<span>.</span>
+          {% endif %}
+        </div>
+        <p class="footer-tagline">{{ site.tagline }}</p>
+        <div class="footer-socials">
+          {% if site.facebook_url %}
+          <a href="{{ site.facebook_url }}" class="social-btn" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          {% endif %}
+          {% if site.instagram_url %}
+          <a href="{{ site.instagram_url }}" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          {% endif %}
+          {% if site.twitter_url %}
+          <a href="{{ site.twitter_url }}" class="social-btn" target="_blank" rel="noopener" aria-label="Twitter/X">
+            <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+          </a>
+          {% endif %}
+          <a href="https://wa.me/{{ site.whatsapp_number }}" class="social-btn" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+          </a>
+        </div>
+      </div>
+ 
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          {% for svc in services %}
+          <li><a href="#services">{{ svc.title }}</a></li>
+          {% empty %}
+          <li><a href="#services">Security Services</a></li>
+          <li><a href="#services">CCTV Installation</a></li>
+          <li><a href="#services">Fibre Installation</a></li>
+          <li><a href="#services">Access Control</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+ 
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#why">Why Choose Us</a></li>
+          {% if team %}<li><a href="#team">Our Team</a></li>{% endif %}
+          {% if gallery %}<li><a href="#gallery">Gallery</a></li>{% endif %}
+          {% if testimonials %}<li><a href="#testimonials">Client Reviews</a></li>{% endif %}
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+ 
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:{{ site.phone }}">{{ site.phone }}</a></li>
+          <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+          <li><a href="https://wa.me/{{ site.whatsapp_number }}" target="_blank" rel="noopener">WhatsApp Us</a></li>
+          {% if site.address %}<li><a href="#contact">{{ site.address }}</a></li>{% endif %}
+        </ul>
+      </div>
+    </div>
+ 
+<div class="footer-bottom">
+      <p class="footer-copy">
+        &copy; {% now "Y" %} <span>{{ site.company_name }}</span>. All rights reserved.
+        &nbsp;&middot;&nbsp;
+        Built with care by <a href="https://www.ygengineering.co.za" target="_blank" rel="noopener" class="footer-credit">YG Engineering</a>
+      </p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+ 
+
+<a href="https://wa.me/{{ site.whatsapp_number }}" class="wa-fab" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.989.578 3.842 1.574 5.4L2 22l4.734-1.542A9.978 9.978 0 0012 22c5.523 0 10-4.477 10-10S17.522 2 11.999 2z"/></svg>
+</a>
+
+<button class="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+ 
+<script src="{% static 'core/js/main.js' %}"></script>
+</body>
+</html>
