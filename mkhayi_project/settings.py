@@ -105,27 +105,20 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ── Proxy & CSRF ─────────────────────────────────────────────
-# Always trust the X-Forwarded-Proto header from Traefik
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
 
-# CSRF trusted origins — always set, covers both http and https
-# and automatically includes all sslip.io preview domains
 CSRF_TRUSTED_ORIGINS = os.environ.get(
     'CSRF_TRUSTED_ORIGINS',
     'https://mkhayi.co.za,https://www.mkhayi.co.za'
 ).split(',')
 
-# Add sslip.io wildcard for Coolify preview URLs
 CSRF_TRUSTED_ORIGINS += [
     'http://*.sslip.io',
     'https://*.sslip.io',
-    f'http://{os.environ.get("ALLOWED_HOSTS", "").split(",")[0]}',
 ]
 
 CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_HTTPONLY = False
-
-if not DEBUG:
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
