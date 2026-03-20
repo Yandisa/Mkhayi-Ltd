@@ -218,7 +218,7 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; }
   transition: color var(--transition-fast);
 }
 .nav-logo span { color: var(--accent); }
-.nav-logo img { height: 44px; width: auto; }
+.nav-logo img { height: 48px; width: auto; }
 
 .nav-links {
   display: flex;
@@ -1601,11 +1601,3 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; }
 @media (max-width: 1024px) { .team-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 768px)  { .team-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px)  { .team-grid { grid-template-columns: 1fr; } }
-
-
-/* ── Logo on scrolled navbar: dark bg pill so white text stays visible ── */
-.navbar.scrolled .nav-logo img {
-  background: var(--navy);
-  border-radius: 6px;
-  padding: 4px 8px;
-}
