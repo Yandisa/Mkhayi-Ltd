@@ -218,7 +218,7 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; }
   transition: color var(--transition-fast);
 }
 .nav-logo span { color: var(--accent); }
-.nav-logo img { height: 84px; width: 150px;  }
+.nav-logo img { height: 44px; width: auto; }
 
 .nav-links {
   display: flex;
@@ -353,6 +353,8 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; }
   50% { opacity: 0.4; transform: scale(0.7); }
 }
 .hero h1 {
+  word-break: keep-all;
+  overflow-wrap: break-word;
   font-size: clamp(2.8rem, 5vw, 5rem);
   font-weight: 700;
   color: var(--white);
@@ -1588,7 +1590,9 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; }
   .about-stats-row { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 480px) {
-  .hero h1 { font-size: 2.4rem; }
+  .hero h1 {
+  word-break: keep-all;
+  overflow-wrap: break-word; font-size: 2.4rem; }
   .hero-actions { flex-direction: column; }
   .gallery-grid { grid-template-columns: 1fr; }
 }
@@ -1598,9 +1602,10 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; }
 @media (max-width: 768px)  { .team-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px)  { .team-grid { grid-template-columns: 1fr; } }
 
-/* ── Logo swap: dark logo shown on scrolled white navbar ── */
-.nav-logo img.logo-light { display: block; }
-.nav-logo img.logo-dark  { display: none;  }
 
-.navbar.scrolled .nav-logo img.logo-light { display: none;  }
-.navbar.scrolled .nav-logo img.logo-dark  { display: block; }
+/* ── Logo on scrolled navbar: dark bg pill so white text stays visible ── */
+.navbar.scrolled .nav-logo img {
+  background: var(--navy);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
