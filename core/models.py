@@ -1,6 +1,52 @@
+import io
+import os
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.core.files.base import ContentFile
+from PIL import Image
 
+
+# ------------------------------------------------------------------
+# Image optimisation helper
+# ------------------------------------------------------------------
+def optimise_image(image_field, max_width, max_height, quality=82):
+    """
+    Resize + compress an ImageField in-place on save.
+    - Converts RGBA/P → RGB (JPEG-safe)
+    - Resizes to fit within max_width × max_height (keeps aspect ratio)
+    - Re-saves as JPEG at the given quality
+    """
+    if not image_field:
+        return
+
+    img = Image.open(image_field)
+
+    # Convert palette / transparency modes to RGB
+    if img.mode in ('RGBA', 'P', 'LA'):
+        background = Image.new('RGB', img.size, (255, 255, 255))
+        if img.mode == 'P':
+            img = img.convert('RGBA')
+        background.paste(img, mask=img.split()[-1] if img.mode in ('RGBA', 'LA') else None)
+        img = background
+    elif img.mode != 'RGB':
+        img = img.convert('RGB')
+
+    # Resize only if larger than the target
+    if img.width > max_width or img.height > max_height:
+        img.thumbnail((max_width, max_height), Image.LANCZOS)
+
+    # Save back to the field as JPEG
+    buffer = io.BytesIO()
+    img.save(buffer, format='JPEG', quality=quality, optimize=True)
+    buffer.seek(0)
+
+    base_name = os.path.splitext(os.path.basename(image_field.name))[0]
+    image_field.save(f'{base_name}.jpg', ContentFile(buffer.read()), save=False)
+
+
+# ------------------------------------------------------------------
+# Models
+# ------------------------------------------------------------------
 
 class SiteSettings(models.Model):
     """Singleton — controls every text, image and contact detail on the site."""
@@ -92,6 +138,32 @@ class SiteSettings(models.Model):
     def save(self, *args, **kwargs):
         self.pk = 1
         super().save(*args, **kwargs)
+        # Optimise images after initial save (so file paths exist)
+        changed = False
+        if self.hero_image:
+            optimise_image(self.hero_image, max_width=1600, max_height=900, quality=80)
+            changed = True
+        if self.about_image:
+            optimise_image(self.about_image, max_width=900, max_height=1100, quality=82)
+            changed = True
+        if self.why_image:
+            optimise_image(self.why_image, max_width=900, max_height=1100, quality=82)
+            changed = True
+        if self.contact_image:
+            optimise_image(self.contact_image, max_width=1200, max_height=600, quality=80)
+            changed = True
+        if self.logo:
+            optimise_image(self.logo, max_width=600, max_height=200, quality=90)
+            changed = True
+        if changed:
+            # Save again without triggering this logic recursively
+            SiteSettings.objects.filter(pk=1).update(
+                hero_image=self.hero_image,
+                about_image=self.about_image,
+                why_image=self.why_image,
+                contact_image=self.contact_image,
+                logo=self.logo,
+            )
 
     def delete(self, *args, **kwargs):
         pass  # prevent deletion
@@ -139,6 +211,9 @@ class Service(models.Model):
             from django.utils.text import slugify
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+        if self.image:
+            optimise_image(self.image, max_width=800, max_height=550, quality=82)
+            Service.objects.filter(pk=self.pk).update(image=self.image)
 
 
 class TeamMember(models.Model):
@@ -155,6 +230,12 @@ class TeamMember(models.Model):
 
     def __str__(self):
         return f'{self.name} — {self.role}'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.photo:
+            optimise_image(self.photo, max_width=500, max_height=500, quality=85)
+            TeamMember.objects.filter(pk=self.pk).update(photo=self.photo)
 
 
 class Testimonial(models.Model):
@@ -174,6 +255,12 @@ class Testimonial(models.Model):
 
     def __str__(self):
         return f'{self.client_name} — {self.company or self.location}'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.photo:
+            optimise_image(self.photo, max_width=300, max_height=300, quality=85)
+            Testimonial.objects.filter(pk=self.pk).update(photo=self.photo)
 
 
 class GalleryImage(models.Model):
@@ -195,6 +282,12 @@ class GalleryImage(models.Model):
 
     def __str__(self):
         return self.caption or f'Image {self.pk}'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.image:
+            optimise_image(self.image, max_width=1200, max_height=800, quality=82)
+            GalleryImage.objects.filter(pk=self.pk).update(image=self.image)
 
 
 class WhyUsPoint(models.Model):
