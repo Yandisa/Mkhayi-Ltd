@@ -12,9 +12,9 @@
   --navy-100:     #C5D5EB;
   --navy-50:      #EBF1F9;
 
-  --white:        #ffffffcf;
-  --gray-50:      #F8F9FB;
-  --gray-100:     #EFF1F5;
+  --white:        #FAFBFC;
+  --gray-50:      #F2F4F7;
+  --gray-100:     #E8ECF2;
   --gray-200:     #DDE1EA;
   --gray-400:     #9EA8BC;
   --gray-600:     #5C6A82;
@@ -188,7 +188,7 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; }
 .navbar.scrolled .nav-logo { color: var(--navy); }
 .navbar.scrolled .hamburger span { background: var(--navy); }
 .navbar.scrolled {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(250, 251, 252, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: 14px 0;
@@ -218,7 +218,7 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; }
   transition: color var(--transition-fast);
 }
 .nav-logo span { color: var(--accent); }
-.nav-logo img { height: 48px; width: auto; }
+.nav-logo img { height: 52px; width: auto; }
 
 .nav-links {
   display: flex;
