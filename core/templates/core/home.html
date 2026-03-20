@@ -35,7 +35,12 @@
     <div class="nav-inner">
       <a href="#home" class="nav-logo">
         {% if site.logo %}
-          <img src="{{ site.logo.url }}" alt="{{ site.company_name }}">
+          <img src="{{ site.logo.url }}" alt="{{ site.company_name }}" class="logo-light">
+          {% if site.logo_dark %}
+            <img src="{{ site.logo_dark.url }}" alt="{{ site.company_name }}" class="logo-dark">
+          {% else %}
+            <img src="{{ site.logo.url }}" alt="{{ site.company_name }}" class="logo-dark" style="filter:invert(13%) sepia(54%) saturate(700%) hue-rotate(192deg) brightness(50%);">
+          {% endif %}
         {% else %}
           {{ site.company_name|truncatechars:10 }}<span>.</span>
         {% endif %}
