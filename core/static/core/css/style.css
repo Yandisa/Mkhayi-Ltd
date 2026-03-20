@@ -192,7 +192,7 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; }
   box-shadow: var(--shadow-s);
 }
 .navbar.hero-dark { background: transparent; }
-.navbar.hero-dark .nav-logo { color: var(--white); }
+
 .navbar.hero-dark .nav-links a { color: rgba(255,255,255,0.85); }
 .navbar.hero-dark .nav-links a:hover { color: var(--white); }
 .navbar.hero-dark .nav-cta { background: var(--white); color: var(--navy); }
