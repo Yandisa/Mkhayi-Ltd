@@ -7,14 +7,7 @@ services:
       - "8000:8000"
     volumes:
       - media_data:/app/media
-      - sqlite_data:/app/db
-    environment:
-      - DEBUG=False
-      - SECRET_KEY=X*FdHt411sHJatJ!&ITK13H(Wyb1AC+ZN(C)!kDY09cNrF0OsR
-      - ALLOWED_HOSTS=mkhayiltd.co.za,www.mkhayiltd.co.za
-      - CSRF_TRUSTED_ORIGINS=https://mkhayiltd.co.za,https://www.mkhayiltd.co.za
     restart: unless-stopped
 
 volumes:
   media_data:
-  sqlite_data:
