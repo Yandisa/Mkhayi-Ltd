@@ -22,7 +22,9 @@
   if (hamburger && navLinks) {
     hamburger.addEventListener('click', () => {
       const open = navLinks.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
       hamburger.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden' : '';
       const spans = hamburger.querySelectorAll('span');
       if (open) {
         spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
@@ -35,6 +37,8 @@
     navLinks.querySelectorAll('a').forEach(a =>
       a.addEventListener('click', () => {
         navLinks.classList.remove('open');
+        hamburger.classList.remove('open');
+        document.body.style.overflow = '';
         hamburger.querySelectorAll('span').forEach(s => {
           s.style.transform = ''; s.style.opacity = '';
         });
