@@ -329,8 +329,10 @@
             <span class="brand-name-fallback">{{ brand.name }}</span>
           {% endif %}
         </div>
-        <p class="brand-name">{{ brand.name }}</p>
-        <span class="brand-cat-pill brand-cat-{{ brand.category }}">{{ brand.get_category_display }}</span>
+        <div class="brand-card-body">
+          <p class="brand-name">{{ brand.name }}</p>
+          <span class="brand-cat-pill brand-cat-{{ brand.category }}">{{ brand.get_category_display }}</span>
+        </div>
       </div>
       {% endfor %}
     </div>
