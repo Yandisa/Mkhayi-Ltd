@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from .models import (
     SiteSettings, Service, TeamMember,
-    Testimonial, GalleryImage, WhyUsPoint, ContactMessage
+    Testimonial, GalleryImage, WhyUsPoint, ContactMessage, Brand
 )
 
 
@@ -172,3 +172,16 @@ class ContactMessageAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
+
+
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
+    list_display  = ('logo_thumb', 'name', 'category', 'order', 'is_active')
+    list_editable = ('category', 'order', 'is_active')
+    list_display_links = ('name',)
+    list_filter   = ('category', 'is_active')
+    search_fields = ('name',)
+
+    def logo_thumb(self, obj):
+        return img_preview(obj.logo.url if obj.logo else None, 40)
+    logo_thumb.short_description = 'Logo'
