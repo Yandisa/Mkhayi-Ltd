@@ -122,6 +122,12 @@ class SiteSettings(models.Model):
     contact_image       = models.ImageField(upload_to='contact/', blank=True, null=True,
                                             help_text='Background image for the contact strip')
 
+    # ── Brands Section
+    brands_heading    = models.CharField(max_length=120, default='Brands We Supply',
+                                         blank=True)
+    brands_subheading = models.TextField(default='We source and install products from industry-leading manufacturers across security, CCTV, solar, and networking.',
+                                          blank=True)
+
     # ── SEO
     meta_description    = models.TextField(blank=True,
                                            default='Mkhayi Ltd. — security services, CCTV installation, and fibre connectivity across South Africa.')
@@ -304,6 +310,35 @@ class WhyUsPoint(models.Model):
 
     def __str__(self):
         return self.heading
+
+
+class Brand(models.Model):
+    CATEGORY_CHOICES = [
+        ('cctv',    'CCTV & Surveillance'),
+        ('access',  'Access Control'),
+        ('solar',   'Solar & Power'),
+        ('network', 'Security & Networking'),
+    ]
+
+    name     = models.CharField(max_length=100)
+    logo     = models.ImageField(upload_to='brands/', blank=True, null=True,
+                                 help_text='Transparent PNG preferred, min 300×150px')
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='cctv')
+    order    = models.PositiveSmallIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['category', 'order', 'name']
+        verbose_name = 'Brand'
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.logo:
+            optimise_image(self.logo, max_width=400, max_height=200, quality=90)
+            Brand.objects.filter(pk=self.pk).update(logo=self.logo)
 
 
 class ContactMessage(models.Model):
