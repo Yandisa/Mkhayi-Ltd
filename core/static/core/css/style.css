@@ -1601,3 +1601,124 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; }
 @media (max-width: 1024px) { .team-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 768px)  { .team-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px)  { .team-grid { grid-template-columns: 1fr; } }
+
+/* ══════════════════════════════════════
+   BRANDS WE SUPPLY
+══════════════════════════════════════ */
+.brands { background: var(--white); }
+.brands-header { text-align: center; margin-bottom: 48px; }
+.brands-header .section-lead { max-width: 620px; margin: 0 auto; }
+
+/* Filter tabs */
+.brands-filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 48px;
+}
+.brands-tab {
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1.5px solid var(--gray-200);
+  background: transparent;
+  color: var(--gray-600);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.brands-tab:hover {
+  border-color: var(--navy-400);
+  color: var(--navy);
+}
+.brands-tab.active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+
+/* Brand grid */
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+
+/* Brand card */
+.brand-card {
+  background: var(--gray-50);
+  border: 1.5px solid var(--gray-100);
+  border-radius: var(--radius-m);
+  padding: 24px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: var(--transition);
+  cursor: default;
+}
+.brand-card:hover {
+  border-color: var(--navy-200);
+  background: var(--white);
+  box-shadow: var(--shadow-m);
+  transform: translateY(-3px);
+}
+.brand-card.hidden { display: none; }
+
+.brand-logo-wrap {
+  height: 56px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.brand-logo-wrap img {
+  max-height: 56px;
+  max-width: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(30%);
+  transition: filter var(--transition);
+}
+.brand-card:hover .brand-logo-wrap img { filter: grayscale(0%); }
+
+.brand-name-fallback {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.brand-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  text-align: center;
+  margin: 0;
+}
+
+/* Category pills */
+.brand-cat-pill {
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.brand-cat-cctv    { background: #EBF1F9; color: var(--navy-600); }
+.brand-cat-access  { background: #F0FFF4; color: #276749; }
+.brand-cat-solar   { background: #FFFBEB; color: #92400E; }
+.brand-cat-network { background: #FDF4FF; color: #6B21A8; }
+
+/* Responsive */
+@media (max-width: 1024px) { .brands-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 768px)  {
+  .brands-grid { grid-template-columns: repeat(3, 1fr); }
+  .brands-tab  { font-size: 0.8rem; padding: 7px 14px; }
+}
+@media (max-width: 480px)  { .brands-grid { grid-template-columns: repeat(2, 1fr); } }
