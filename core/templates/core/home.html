@@ -44,6 +44,7 @@
       <ul class="nav-links" role="list">
         <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
+        {% if brands %}<li><a href="#brands">Brands</a></li>{% endif %}
         <li><a href="#why">Why Us</a></li>
         {% if gallery %}<li><a href="#gallery">Gallery</a></li>{% endif %}
         {% if team %}<li><a href="#team">Team</a></li>{% endif %}
@@ -298,6 +299,44 @@
     </div>
   </div>
 </section>
+
+{% if brands %}
+<section id="brands" class="brands">
+  <div class="container">
+    <div class="brands-header">
+      <div class="eyebrow reveal">What We Install</div>
+      <h2 class="section-title reveal reveal-delay-1">{{ site.brands_heading }}</h2>
+      {% if site.brands_subheading %}
+      <p class="section-lead reveal reveal-delay-2">{{ site.brands_subheading }}</p>
+      {% endif %}
+    </div>
+
+    <div class="brands-filter reveal reveal-delay-2">
+      <button class="brands-tab active" data-filter="all">All Brands</button>
+      <button class="brands-tab" data-filter="cctv">CCTV &amp; Surveillance</button>
+      <button class="brands-tab" data-filter="access">Access Control</button>
+      <button class="brands-tab" data-filter="solar">Solar &amp; Power</button>
+      <button class="brands-tab" data-filter="network">Security &amp; Networking</button>
+    </div>
+
+    <div class="brands-grid">
+      {% for brand in brands %}
+      <div class="brand-card reveal" data-category="{{ brand.category }}">
+        <div class="brand-logo-wrap">
+          {% if brand.logo %}
+            <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" loading="lazy">
+          {% else %}
+            <span class="brand-name-fallback">{{ brand.name }}</span>
+          {% endif %}
+        </div>
+        <p class="brand-name">{{ brand.name }}</p>
+        <span class="brand-cat-pill brand-cat-{{ brand.category }}">{{ brand.get_category_display }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
 
 <section id="why" class="why">
   <div class="container">
