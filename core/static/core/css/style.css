@@ -1570,15 +1570,31 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; }
     flex-direction: column;
     position: fixed;
     inset: 0;
-    top: 68px;
+    top: 0;
+    padding-top: 80px;
     background: var(--white);
     align-items: center;
     justify-content: center;
-    gap: 32px;
-    z-index: 999;
+    gap: 36px;
+    z-index: 1001;
   }
-  .nav-links.open a { font-size: 1.1rem; color: var(--navy); }
+  .nav-links.open a,
+  .navbar.hero-dark .nav-links.open a,
+  .navbar .nav-links.open a {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--navy) !important;
+  }
+  .nav-links.open a:hover { color: var(--accent) !important; }
+  .nav-links.open .nav-cta {
+    background: var(--navy) !important;
+    color: var(--white) !important;
+    padding: 12px 32px;
+    border-radius: var(--radius-s);
+  }
   .hamburger { display: flex; }
+  .hamburger.open { z-index: 1002; position: relative; }
+  .hamburger.open span { background: var(--navy) !important; }
   .services-grid { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: 1fr 1fr; }
