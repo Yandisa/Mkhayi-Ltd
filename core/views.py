@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import SiteSettings, Service, TeamMember, Testimonial, GalleryImage, WhyUsPoint, ContactMessage
+from .models import SiteSettings, Service, TeamMember, Testimonial, GalleryImage, WhyUsPoint, ContactMessage, Brand
 
 
 def home(request):
@@ -10,6 +10,7 @@ def home(request):
     testimonials = Testimonial.objects.filter(is_active=True)
     gallery     = GalleryImage.objects.filter(is_active=True)
     why_points  = WhyUsPoint.objects.filter(is_active=True)
+    brands      = Brand.objects.filter(is_active=True)
 
     if request.method == 'POST':
         name    = request.POST.get('name', '').strip()
@@ -36,4 +37,5 @@ def home(request):
         'testimonials': testimonials,
         'gallery':      gallery,
         'why_points':   why_points,
+        'brands':       brands,
     })
