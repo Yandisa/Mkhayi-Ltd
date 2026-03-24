@@ -97,4 +97,19 @@
     }, 5000);
   });
 
+  /* ── Brands filter tabs ── */
+  const brandsTabs  = document.querySelectorAll('.brands-tab');
+  const brandCards  = document.querySelectorAll('.brand-card');
+  brandsTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      brandsTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+      brandCards.forEach(card => {
+        const show = filter === 'all' || card.dataset.category === filter;
+        card.classList.toggle('hidden', !show);
+      });
+    });
+  });
+
 })();
